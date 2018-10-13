@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmn.common.quartz.dao.QuartzResultDao">
+    <sql id="result">
+      result_id as resultId,
+      job_id as jobId,
+      job_name as jobName,
+      JOB_GROUP as jobGroup,
+      success as success,
+      error_msg as errorMsg,
+      duration as duration,
+      create_time as createTime
+    </sql>
+   <select id="findList"  parameterType="com.lmn.common.quartz.dto.QuartzResultDTO" resultType="com.lmn.common.quartz.dto.QuartzJobDTO">
+       SELECT
+        <include refid="result"></include>
+        from t_lmn_quartz_result
+   </select>
+
+    <insert id="insert" parameterType="com.lmn.common.quartz.dto.QuartzResultDTO">
+        INSERT INTO t_lmn_quartz_result(
+        result_id,
+        job_id,
+        job_name,
+        JOB_GROUP,
+        success,
+        error_msg,
+        duration,
+        create_time
+        ) VALUES (
+        #{resultId},
+        #{jobId},
+        #{jobName},
+        #{jobGroup},
+        #{success},
+        #{errorMsg},
+        #{duration},
+        #{createTime}
+        )
+    </insert>
+
+</mapper>

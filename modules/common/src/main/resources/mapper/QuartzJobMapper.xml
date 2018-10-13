@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lmn.common.quartz.dao.QuartzJobDao">
+    <sql id="result">
+      job_id as jobId,
+      job_name as jobName,
+      JOB_GROUP as jobGroup,
+      JOB_STATUS as jobStatus,
+      IS_CONCURRENT as isConcurrent,
+      Job_Class as jobClass,
+      CRON_EXPRESSION as cronExpression,
+      startTime as startTime,
+      previousTime as previousTime,
+      nextTime as nextTime
+    </sql>
+   <select id="findList"  parameterType="com.lmn.common.quartz.dto.QuartzJobDTO" resultType="com.lmn.common.quartz.dto.QuartzJobDTO">
+       SELECT
+        <include refid="result"></include>
+        from t_lmn_Quartz_Job
+   </select>
+    <update id="update" parameterType="com.lmn.common.quartz.dto.QuartzJobDTO">
+        update t_lmn_Quartz_Job SET
+            previousTime = #{previousTime},
+            nextTime = #{nextTime},
+            startTime = #{startTime}
+            WHERE job_id = #{jobId}
+    </update>
+
+</mapper>
