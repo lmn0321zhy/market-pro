@@ -1,4 +1,4 @@
-package com.lmn.common.exception;
+package com.lmn.common.base;
 
 public enum ResultCode {
 
