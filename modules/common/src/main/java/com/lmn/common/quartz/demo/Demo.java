@@ -1,6 +1,6 @@
 package com.lmn.common.quartz.demo;
 
-import com.lmn.common.quartz.BaseJob;
+import com.lmn.common.base.BaseJob;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

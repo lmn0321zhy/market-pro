@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 主要是通过注解：@DisallowConcurrentExecution
  */
 @DisallowConcurrentExecution
-public class QuartzJobFactoryDisallowConcurrentExecution implements Job {
+public class UnAsyncJob implements Job {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired

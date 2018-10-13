@@ -1,10 +1,10 @@
 package com.lmn.common.quartz.service;
 
+import com.lmn.common.base.CrudService;
 import com.lmn.common.quartz.AsyncJob;
-import com.lmn.common.quartz.QuartzJobFactoryDisallowConcurrentExecution;
+import com.lmn.common.quartz.UnAsyncJob;
 import com.lmn.common.quartz.dao.QuartzJobDao;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
-import com.lmn.common.base.CrudService;
 import com.lmn.common.utils.QuartzJobUtils;
 import lombok.Data;
 import org.quartz.*;
@@ -189,7 +189,7 @@ public class QuartzJobService extends CrudService<QuartzJobDao, QuartzJobDTO> {
 
     private JobDetail getJobDetail(QuartzJobDTO job) {
         Class<? extends Job> clazz = QuartzJobDTO.CONCURRENT_IS.equals(job.getIsConcurrent())
-                ? AsyncJob.class : QuartzJobFactoryDisallowConcurrentExecution.class;
+                ? AsyncJob.class : UnAsyncJob.class;
         JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
         return jobDetail;
     }

@@ -1,4 +1,4 @@
-package com.lmn.common.quartz;
+package com.lmn.common.base;
 
 import org.quartz.JobExecutionException;
 
