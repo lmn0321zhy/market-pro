@@ -1,7 +1,7 @@
 package com.lmn.common.quartz;
 
 import com.lmn.common.quartz.dto.QuartzJobDTO;
-import com.lmn.common.quartz.impl.QuartzJobServiceImpl;
+import com.lmn.common.quartz.service.QuartzJobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class QuartzRunner implements CommandLineRunner {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private QuartzJobServiceImpl quartzJobService;
+    private QuartzJobService quartzJobService;
     @Override
     public void run(String... strings) throws Exception {
         List<QuartzJobDTO> taskList = quartzJobService.findByJobStatus(QuartzJobDTO.STATUS_RUNNING);

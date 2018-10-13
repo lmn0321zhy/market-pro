@@ -1,4 +1,4 @@
-package com.lmn.common.persistence;
+package com.lmn.common.base;
 
 import com.lmn.common.config.Const;
 import org.apache.commons.lang3.math.NumberUtils;

@@ -1,7 +1,7 @@
 package com.lmn.common.security.shiro.cache;
 
 import com.lmn.common.utils.JedisUtils;
-import com.lmn.common.web.Servlets;
+import com.lmn.common.servlet.Servlets;
 import com.google.common.collect.Sets;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;

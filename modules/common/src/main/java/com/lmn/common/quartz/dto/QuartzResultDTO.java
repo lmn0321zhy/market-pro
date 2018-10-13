@@ -1,6 +1,6 @@
 package com.lmn.common.quartz.dto;
 
-import com.lmn.common.persistence.DataEntity;
+import com.lmn.common.base.DataEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,19 +10,10 @@ import java.util.Date;
  */
 @Data
 public class QuartzResultDTO  extends DataEntity<QuartzResultDTO> {
-
-	private String resultId;
-	
-	private String jobId;
 	private String jobName;
 	private String jobGroup;
-	private boolean success;
-
+	private String success;
 	private String errorMsg;
-	
 	private String duration;
-	
 	private Date createTime;
-
-
 }

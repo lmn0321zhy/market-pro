@@ -1,12 +1,11 @@
-package com.lmn.common.quartz.impl;
+package com.lmn.common.quartz.service;
 
 import com.lmn.common.quartz.AsyncJob;
 import com.lmn.common.quartz.QuartzJobFactoryDisallowConcurrentExecution;
-import com.lmn.common.quartz.QuartzJobService;
-import com.lmn.common.quartz.QuartzJobUtils;
 import com.lmn.common.quartz.dao.QuartzJobDao;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
-import com.lmn.common.service.CrudService;
+import com.lmn.common.base.CrudService;
+import com.lmn.common.utils.QuartzJobUtils;
 import lombok.Data;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
@@ -25,7 +24,7 @@ import java.util.Set;
  */
 @Data
 @Service
-public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO> implements QuartzJobService{
+public class QuartzJobService extends CrudService<QuartzJobDao, QuartzJobDTO> {
 
     @Autowired
     private Scheduler scheduler;
@@ -70,7 +69,6 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @return
      * @throws SchedulerException
      */
-    @Override
     public QuartzJobDTO getJob(String jobName,String jobGroup) throws SchedulerException {
         QuartzJobDTO job = null;
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
@@ -86,7 +84,6 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @return
      * @throws SchedulerException
      */
-    @Override
     public List<QuartzJobDTO> getAllJobs() throws SchedulerException{
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
@@ -110,7 +107,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @return
      * @throws SchedulerException
      */
-    @Override
+    
     public List<QuartzJobDTO> getRunningJob() throws SchedulerException {
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
         List<QuartzJobDTO> jobList = new ArrayList<QuartzJobDTO>(executingJobs.size());
@@ -135,12 +132,11 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param job
      * @throws SchedulerException
      */
-    @Override
+    
     public boolean addJob(QuartzJobDTO job) throws SchedulerException {
         if(job == null || !QuartzJobDTO.STATUS_RUNNING.equals(job.getJobStatus())) {
             return false;
         }
-
         String jobName = job.getJobName();
         String jobGroup = job.getJobGroup();
         if(!QuartzJobUtils.isValidExpression(job.getCronExpression())) {
@@ -203,7 +199,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param job
      * @return
      */
-    @Override
+    
     @Transactional
     public boolean pauseJob(QuartzJobDTO job){
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
@@ -228,7 +224,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param job
      * @return
      */
-    @Override
+    
     @Transactional
     public boolean resumeJob(QuartzJobDTO job){
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
@@ -259,7 +255,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
     /**
      * 删除任务
      */
-    @Override
+    
     @Transactional
     public boolean deleteJob(QuartzJobDTO job){
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
@@ -284,7 +280,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param scheduleJob
      * @throws SchedulerException
      */
-    @Override
+    
     public void startJob(QuartzJobDTO scheduleJob) throws SchedulerException{
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.triggerJob(jobKey);
@@ -295,7 +291,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param job
      * @throws SchedulerException
      */
-    @Override
+    
     @Transactional
     public void updateCronExpression(QuartzJobDTO job) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
@@ -321,7 +317,7 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
      * @param job
      * @throws SchedulerException
      */
-    @Override
+    
     @Transactional
     public void updateStartTime(QuartzJobDTO job) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
@@ -339,14 +335,14 @@ public class QuartzJobServiceImpl extends CrudService<QuartzJobDao, QuartzJobDTO
         getJobDetail(job).getJobDataMap().put(getJobIdentity(job), job);
     }
 
-    @Override
+    
     public List<QuartzJobDTO> findByJobStatus(String statusRunning) {
         QuartzJobDTO quartzJobDTO=new QuartzJobDTO();
         quartzJobDTO.setJobStatus(statusRunning);
         return quartzJobDao.findList(quartzJobDTO);
     }
 
-    @Override
+    
     public void updateByIdAndTime(QuartzJobDTO QuartzJobDTO) {
 
     }

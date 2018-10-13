@@ -2,7 +2,6 @@ package com.lmn.common.config;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.lmn.common.quartz.MarketDataSourceConfig;
 import com.lmn.common.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

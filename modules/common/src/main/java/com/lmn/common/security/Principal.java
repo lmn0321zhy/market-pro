@@ -1,6 +1,6 @@
 package com.lmn.common.security;
 
-import com.lmn.common.persistence.IUser;
+import com.lmn.common.base.IUser;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.lmn.common.persistence;
+package com.lmn.common.base;
 
 /**
  * DAO支持类实现

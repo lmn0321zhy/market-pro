@@ -1,11 +1,8 @@
-package com.lmn.common.service;
+package com.lmn.common.base;
 
-import com.lmn.common.persistence.BaseEntity;
-import com.lmn.common.persistence.CrudDao;
-import com.lmn.common.persistence.Paging;
-import com.lmn.common.utils.Collections3;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lmn.common.utils.Collections3;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

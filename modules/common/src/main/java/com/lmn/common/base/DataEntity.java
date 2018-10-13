@@ -1,9 +1,10 @@
-package com.lmn.common.persistence;
+package com.lmn.common.base;
 
 /**
  * Created by lmn on 2018-10-10.
  */
 
+import com.lmn.common.utils.IdGen;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,17 +43,17 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
     @Override
     public void preInsert() {
         // 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
-//        if (!this.isNewRecord) {
-//            setId(IdGen.uuid());
-//        }
+        if (!this.isNewRecord) {
+            setId(IdGen.uuid());
+        }
 //        User user = UserUtils.getUser();
 //        if (StringUtils.isNotBlank(user.getId())) {
 //            this.updateBy = user;
 //            this.createBy = user;
 //        }
-//        this.updateDate = new Date();
-//        this.createDate = this.updateDate;
-//        saveMeta();
+        this.updateDate = new Date();
+        this.createDate = this.updateDate;
+        saveMeta();
     }
 
     /**

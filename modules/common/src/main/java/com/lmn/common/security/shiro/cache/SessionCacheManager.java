@@ -1,6 +1,6 @@
 package com.lmn.common.security.shiro.cache;
 
-import com.lmn.common.web.Servlets;
+import com.lmn.common.servlet.Servlets;
 import com.google.common.collect.Sets;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;

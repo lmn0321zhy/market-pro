@@ -3,7 +3,7 @@ package com.lmn.common.security.shiro.session;
 import com.lmn.common.config.Const;
 import com.lmn.common.utils.DateUtils;
 import com.lmn.common.utils.StringUtils;
-import com.lmn.common.web.Servlets;
+import com.lmn.common.servlet.Servlets;
 import com.google.common.collect.Sets;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;

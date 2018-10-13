@@ -1,4 +1,4 @@
-package com.lmn.common.quartz;
+package com.lmn.common.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

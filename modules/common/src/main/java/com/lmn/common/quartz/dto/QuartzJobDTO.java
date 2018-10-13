@@ -1,6 +1,6 @@
 package com.lmn.common.quartz.dto;
 
-import com.lmn.common.persistence.DataEntity;
+import com.lmn.common.base.DataEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -21,7 +21,7 @@ public class QuartzJobDTO extends DataEntity<QuartzJobDTO> {
     /**
      * 任务id
      */
-    private String jobId;
+    private String id;
 
     /**
      * 任务名称

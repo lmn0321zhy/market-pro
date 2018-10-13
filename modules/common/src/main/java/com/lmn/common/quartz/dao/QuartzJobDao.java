@@ -1,6 +1,6 @@
 package com.lmn.common.quartz.dao;
 
-import com.lmn.common.persistence.CrudDao;
+import com.lmn.common.base.CrudDao;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
 import org.apache.ibatis.annotations.Mapper;
 

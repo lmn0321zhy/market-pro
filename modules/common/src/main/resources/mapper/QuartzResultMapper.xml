@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmn.common.quartz.dao.QuartzResultDao">
     <sql id="result">
-      result_id as resultId,
-      job_id as jobId,
+      id as id,
       job_name as jobName,
       JOB_GROUP as jobGroup,
       success as success,
@@ -19,8 +18,7 @@
 
     <insert id="insert" parameterType="com.lmn.common.quartz.dto.QuartzResultDTO">
         INSERT INTO t_lmn_quartz_result(
-        result_id,
-        job_id,
+        id,
         job_name,
         JOB_GROUP,
         success,
@@ -28,8 +26,7 @@
         duration,
         create_time
         ) VALUES (
-        #{resultId},
-        #{jobId},
+        #{id},
         #{jobName},
         #{jobGroup},
         #{success},

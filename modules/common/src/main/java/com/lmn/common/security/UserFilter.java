@@ -1,6 +1,6 @@
 package com.lmn.common.security;
 
-import com.lmn.common.persistence.ApiData;
+import com.lmn.common.base.ApiData;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 

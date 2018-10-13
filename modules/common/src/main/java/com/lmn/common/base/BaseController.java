@@ -1,8 +1,8 @@
-package com.lmn.common.web;
+package com.lmn.common.base;
 
 import com.lmn.common.utils.BeanValidators;
 import com.lmn.common.mapper.JsonMapper;
-import com.lmn.common.persistence.ApiData;
+import com.lmn.common.base.ApiData;
 import com.lmn.common.utils.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authc.AuthenticationException;

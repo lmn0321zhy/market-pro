@@ -1,4 +1,4 @@
-package com.lmn.common.web;
+package com.lmn.common.servlet;
 
 import com.lmn.common.config.Const;
 import com.lmn.common.utils.Encodes;

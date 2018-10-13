@@ -1,4 +1,4 @@
-package com.lmn.common.persistence;
+package com.lmn.common.base;
 
 /**
  * 用户接口类

@@ -1,5 +1,6 @@
-package com.lmn.common.quartz;
+package com.lmn.common.config;
 
+import com.lmn.common.quartz.JobFactory;
 import lombok.Data;
 import org.quartz.Scheduler;
 import org.quartz.ee.servlet.QuartzInitializerListener;

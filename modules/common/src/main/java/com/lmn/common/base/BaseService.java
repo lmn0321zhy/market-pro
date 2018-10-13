@@ -1,4 +1,4 @@
-package com.lmn.common.service;
+package com.lmn.common.base;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

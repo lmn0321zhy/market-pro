@@ -1,5 +1,6 @@
-package com.lmn.common.quartz;
+package com.lmn.common.utils;
 
+import com.lmn.common.quartz.BaseJob;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
 import com.lmn.common.quartz.dto.QuartzResultDTO;
 import org.apache.logging.log4j.LogManager;
@@ -37,16 +38,16 @@ public class QuartzJobUtils {
             if (object instanceof BaseJob) {
                 ((BaseJob) object).execute();
             }
+            result.setSuccess("1");
         } catch (Exception e) {
             String errorMsg = e.getMessage();
             logger.error(errorMsg, e);
-            result.setSuccess(true);
+            result.setSuccess("0");
             result.setErrorMsg(errorMsg);
         }
         long end = System.currentTimeMillis();
         result.setDuration(String.valueOf((end - start)));
         result.setCreateTime(new Date());
-        result.setJobId(scheduleJob.getJobId());
         result.setJobName(scheduleJob.getJobName());
         result.setJobGroup(scheduleJob.getJobGroup());
         return result;
