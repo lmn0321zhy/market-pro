@@ -1,0 +1,8 @@
+@import "animate.css";
+/* @import "globalStyle.css"; */
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
