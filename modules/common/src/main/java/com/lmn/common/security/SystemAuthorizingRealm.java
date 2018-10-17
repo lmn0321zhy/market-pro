@@ -1,16 +1,13 @@
-package com.lmn.common.sys.security;
+package com.lmn.common.security;
 
 
 import com.lmn.common.config.Const;
-import com.lmn.common.security.Principal;
-import com.lmn.common.security.UsernamePasswordToken;
 import com.lmn.common.servlet.Servlets;
 import com.lmn.common.servlet.ValidateCodeServlet;
 import com.lmn.common.sys.entity.Menu;
 import com.lmn.common.sys.entity.Role;
 import com.lmn.common.sys.entity.User;
 import com.lmn.common.sys.service.SystemService;
-import com.lmn.common.sys.utils.LogUtils;
 import com.lmn.common.sys.utils.UserUtils;
 import com.lmn.common.utils.Encodes;
 import com.lmn.common.utils.SpringContextHolder;
@@ -156,7 +153,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             //写入登录用户名到缓存中
 //            UserUtils.getSession().setAttribute("loginName", user.getLoginName());
             // 记录登录日志
-            LogUtils.saveLog(Servlets.getRequest(), "系统登录");
+            logger.info(Servlets.getRequest().toString(), "系统登录");
             return info;
         } else {
             return null;

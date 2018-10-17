@@ -6,22 +6,19 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.lmn.common.base.BaseService;
 import com.lmn.common.base.Paging;
+import com.lmn.common.dao.MenuDao;
+import com.lmn.common.dao.RoleDao;
+import com.lmn.common.dao.UserDao;
 import com.lmn.common.exception.ServiceException;
 import com.lmn.common.mapper.JsonMapper;
 import com.lmn.common.security.Digests;
+import com.lmn.common.security.SystemAuthorizingRealm;
 import com.lmn.common.security.shiro.session.SessionDAO;
 import com.lmn.common.servlet.Servlets;
-import com.lmn.common.sys.dao.MenuDao;
-import com.lmn.common.sys.dao.RoleDao;
-import com.lmn.common.sys.dao.UserDao;
-import com.lmn.common.sys.entity.Menu;
-import com.lmn.common.sys.entity.Office;
-import com.lmn.common.sys.entity.Role;
-import com.lmn.common.sys.entity.User;
-import com.lmn.common.sys.security.SystemAuthorizingRealm;
-import com.lmn.common.sys.utils.LogUtils;
+import com.lmn.common.sys.entity.*;
 import com.lmn.common.sys.utils.UserUtils;
 import com.lmn.common.utils.*;
+import com.mchange.v2.log.LogUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -426,7 +423,7 @@ public class SystemService extends BaseService {
 //		// 清除权限缓存
 //		systemRealm.clearAllCachedAuthorizationInfo();
         // 清除日志相关缓存
-        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
+//        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
     }
 
     public void updateMenuSort(Menu menu) {
@@ -436,7 +433,7 @@ public class SystemService extends BaseService {
 //		// 清除权限缓存
 //		systemRealm.clearAllCachedAuthorizationInfo();
         // 清除日志相关缓存
-        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
+//        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
     }
 
     public void deleteMenu(Menu menu) {
@@ -446,7 +443,7 @@ public class SystemService extends BaseService {
 //		// 清除权限缓存
 //		systemRealm.clearAllCachedAuthorizationInfo();
         // 清除日志相关缓存
-        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
+//        CacheUtils.remove(LogUtils.CACHE_MENU_NAME_PATH_MAP);
     }
 
     /**

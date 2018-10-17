@@ -1,5 +1,6 @@
 package com.lmn.common.sys.entity;
 
+import com.lmn.common.base.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
 /**

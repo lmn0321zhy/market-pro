@@ -1,17 +1,17 @@
 package com.lmn.common.sys.web;
 
-import cn.wenwuyun.common.config.Const;
-import cn.wenwuyun.common.persistence.ApiData;
-import cn.wenwuyun.common.ui.SimpleTree;
-import cn.wenwuyun.common.utils.StringUtils;
-import cn.wenwuyun.common.web.BaseController;
-import cn.wenwuyun.modules.sys.entity.Office;
-import cn.wenwuyun.modules.sys.entity.User;
-import cn.wenwuyun.modules.sys.service.OfficeService;
-import cn.wenwuyun.modules.sys.utils.DictUtils;
-import cn.wenwuyun.modules.sys.utils.UserUtils;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.lmn.common.base.ApiData;
+import com.lmn.common.base.BaseController;
+import com.lmn.common.config.Const;
+import com.lmn.common.sys.entity.Office;
+import com.lmn.common.sys.entity.User;
+import com.lmn.common.sys.service.OfficeService;
+import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.ui.SimpleTree;
+import com.lmn.common.utils.StringUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +68,9 @@ public class OfficeController extends BaseController {
             office.setParent(user.getOffice());
         }
         office.setParent(officeService.get(office.getParent().getId()));
-        if (office.getArea() == null) {
-            office.setArea(user.getOffice().getArea());
-        }
+//        if (office.getArea() == null) {
+//            office.setArea(user.getOffice().getArea());
+//        }
         if (StringUtils.isNotBlank(office.getId())) {
             office.setChildDeptList((List<String>) (officeService.getChildDept(office.getId()).get("childDeptList")));
         }
@@ -104,11 +104,11 @@ public class OfficeController extends BaseController {
         if (office.getChildDeptList() != null) {
             Office childOffice = null;
             for (String id : office.getChildDeptList()) {
-                if (StringUtils.isBlank(childDeptStr) || StringUtils.isNotBlank(childDeptStr) && !DictUtils.getDictLabel(id, "sys_office_common", "未知").equals("未知") && !childDeptStr.contains(DictUtils.getDictLabel(id, "sys_office_common", "未知"))) {
+                if (StringUtils.isBlank(childDeptStr) || StringUtils.isNotBlank(childDeptStr) ) {
                     childOffice = new Office();
-                    childOffice.setName(DictUtils.getDictLabel(id, "sys_office_common", "未知"));
-                    childOffice.setParent(office);
-                    childOffice.setArea(office.getArea());
+//                    childOffice.setName(DictUtils.getDictLabel(id, "sys_office_common", "未知"));
+//                    childOffice.setParent(office);
+//                    childOffice.setArea(office.getArea());
                     childOffice.setType("2");
                     childOffice.setGrade(String.valueOf(Integer.valueOf(office.getGrade()) + 1));
                     childOffice.setUseable(Const.YES);

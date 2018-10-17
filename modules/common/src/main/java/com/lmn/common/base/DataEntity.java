@@ -4,11 +4,20 @@ package com.lmn.common.base;
  * Created by lmn on 2018-10-10.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
+import com.lmn.common.sys.entity.MetaContent;
+import com.lmn.common.sys.entity.User;
+import com.lmn.common.sys.utils.MetaUtils;
+import com.lmn.common.sys.utils.UserUtils;
 import com.lmn.common.utils.IdGen;
+import com.lmn.common.utils.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 
 /**
@@ -19,9 +28,9 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
     private static final long serialVersionUID = 1L;
 
     protected String remarks;    // 备注
-//    protected User createBy;    // 创建者
+    protected User createBy;    // 创建者
     protected Date createDate;    // 创建日期
-//    protected User updateBy;    // 更新者
+    protected User updateBy;    // 更新者
     protected Date updateDate;    // 更新日期
     protected String delFlag;    // 删除标记（0：正常；1：删除；2：审核）
 
@@ -46,11 +55,11 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         if (!this.isNewRecord) {
             setId(IdGen.uuid());
         }
-//        User user = UserUtils.getUser();
-//        if (StringUtils.isNotBlank(user.getId())) {
-//            this.updateBy = user;
-//            this.createBy = user;
-//        }
+        User user = UserUtils.getUser();
+        if (StringUtils.isNotBlank(user.getId())) {
+            this.updateBy = user;
+            this.createBy = user;
+        }
         this.updateDate = new Date();
         this.createDate = this.updateDate;
         saveMeta();
@@ -61,12 +70,12 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
      */
     @Override
     public void preUpdate() {
-//        User user = UserUtils.getUser();
-//        if (StringUtils.isNotBlank(user.getId())) {
-//            this.updateBy = user;
-//        }
-//        this.updateDate = new Date();
-//        saveMeta();
+        User user = UserUtils.getUser();
+        if (StringUtils.isNotBlank(user.getId())) {
+            this.updateBy = user;
+        }
+        this.updateDate = new Date();
+        saveMeta();
     }
 
     /**
@@ -74,16 +83,16 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
      */
     private void saveMeta() {
 //        //存储媒体数据
-//        if (StringUtils.isNotBlank(this.getMetaIds())) {
-//            List<MetaContent> metaContents = Lists.newArrayList();
-//            String[] metaIds = StringUtils.split(this.getMetaIds(), ",");
-//            //去重,防止重复id入库
-//            HashSet<String> hashSet = new HashSet(Lists.newArrayList(metaIds));
-//            for (String s : Lists.newArrayList(hashSet)) {
-//                metaContents.add(new MetaContent(s, this.id));
-//            }
-//            MetaUtils.saveMetaContent(metaContents);
-//        }
+        if (StringUtils.isNotBlank(this.getMetaIds())) {
+            List<MetaContent> metaContents = Lists.newArrayList();
+            String[] metaIds = StringUtils.split(this.getMetaIds(), ",");
+            //去重,防止重复id入库
+            HashSet<String> hashSet = new HashSet(Lists.newArrayList(metaIds));
+            for (String s : Lists.newArrayList(hashSet)) {
+                metaContents.add(new MetaContent(s, this.id));
+            }
+            MetaUtils.saveMetaContent(metaContents);
+        }
     }
 
     @Length(min = 0, max = 255)
@@ -95,14 +104,14 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         this.remarks = remarks;
     }
 
-    //@JsonIgnore
-//    public User getCreateBy() {
-//        return createBy;
-//    }
-//
-//    public void setCreateBy(User createBy) {
-//        this.createBy = createBy;
-//    }
+//    @JsonIgnore
+    public User getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(User createBy) {
+        this.createBy = createBy;
+    }
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -114,14 +123,14 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         this.createDate = createDate;
     }
 
-    //@JsonIgnore
-//    public User getUpdateBy() {
-//        return updateBy;
-//    }
-//
-//    public void setUpdateBy(User updateBy) {
-//        this.updateBy = updateBy;
-//    }
+//    @JsonIgnore
+    public User getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy;
+    }
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

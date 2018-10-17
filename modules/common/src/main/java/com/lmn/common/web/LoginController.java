@@ -1,22 +1,22 @@
-package com.lmn.common.sys.web;
+package com.lmn.common.web;
 
-import cn.wenwuyun.common.config.Const;
-import cn.wenwuyun.common.mapper.JsonMapper;
-import cn.wenwuyun.common.persistence.ApiData;
-import cn.wenwuyun.common.security.FormAuthenticationFilter;
-import cn.wenwuyun.common.security.Principal;
-import cn.wenwuyun.common.security.shiro.session.SessionDAO;
-import cn.wenwuyun.common.servlet.ValidateCodeServlet;
-import cn.wenwuyun.common.utils.IdGen;
-import cn.wenwuyun.common.utils.StringUtils;
-import cn.wenwuyun.common.web.BaseController;
-import cn.wenwuyun.modules.sys.entity.Office;
-import cn.wenwuyun.modules.sys.entity.Options;
-import cn.wenwuyun.modules.sys.entity.Role;
-import cn.wenwuyun.modules.sys.entity.User;
-import cn.wenwuyun.modules.sys.service.OptionsService;
-import cn.wenwuyun.modules.sys.service.SystemService;
-import cn.wenwuyun.modules.sys.utils.UserUtils;
+import com.lmn.common.base.ApiData;
+import com.lmn.common.base.BaseController;
+import com.lmn.common.config.Const;
+import com.lmn.common.mapper.JsonMapper;
+import com.lmn.common.security.FormAuthenticationFilter;
+import com.lmn.common.security.Principal;
+import com.lmn.common.security.shiro.session.SessionDAO;
+import com.lmn.common.servlet.ValidateCodeServlet;
+import com.lmn.common.sys.entity.Office;
+import com.lmn.common.sys.entity.Options;
+import com.lmn.common.sys.entity.Role;
+import com.lmn.common.sys.entity.User;
+import com.lmn.common.sys.service.OptionsService;
+import com.lmn.common.sys.service.SystemService;
+import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.utils.IdGen;
+import com.lmn.common.utils.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -68,7 +68,7 @@ public class LoginController extends BaseController {
             apiData.setAuthenticate("true");
             apiData.setData(UserUtils.getUser());
             //登录成功后清除验证码
-            UserUtils.isValidateCodeLogin(principal.getLoginName(), false, true);
+            UserUtils.isValidateCodeLogin(principal.getName(), false, true);
         } else {
             apiData.setAuthenticate("false");
         }
@@ -159,7 +159,6 @@ public class LoginController extends BaseController {
         model.addAttribute("appName", Const.getAppName());
         model.addAttribute("userName", user.getName());
         model.addAttribute("company", user.getCompany());
-        model.addAttribute("companyArea", user.getCompany().getArea());
         model.addAttribute("office", user.getOffice());
         List<String> roles = new ArrayList<>();
         for (Role role : UserUtils.getRoleList()) {

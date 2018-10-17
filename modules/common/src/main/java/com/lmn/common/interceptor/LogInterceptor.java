@@ -1,9 +1,9 @@
-package com.lmn.common.sys.interceptor;
+package com.lmn.common.interceptor;
 
 
 import com.lmn.common.base.BaseService;
-import com.lmn.common.sys.utils.LogUtils;
 import com.lmn.common.utils.DateUtils;
+import com.mchange.v2.log.LogUtils;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,7 +45,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
                                 Object handler, Exception ex) throws Exception {
 
         // 保存日志
-        LogUtils.saveLog(request, handler, ex, null);
+//        LogUtils.saveLog(request, handler, ex, null);
 
         // 打印JVM信息。
         if (logger.isDebugEnabled()) {

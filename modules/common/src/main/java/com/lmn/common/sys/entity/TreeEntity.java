@@ -1,7 +1,7 @@
 package com.lmn.common.sys.entity;
 
-import cn.wenwuyun.common.utils.Reflections;
 import com.lmn.common.base.DataEntity;
+import com.lmn.common.utils.Reflections;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 

@@ -1,21 +1,20 @@
 package com.lmn.common.sys.web;
 
-import cn.wenwuyun.common.beanvalidator.BeanValidators;
-import cn.wenwuyun.common.config.Const;
-import cn.wenwuyun.common.persistence.ApiData;
-import cn.wenwuyun.common.utils.DateUtils;
-import cn.wenwuyun.common.utils.StringUtils;
-import cn.wenwuyun.common.web.BaseController;
-import cn.wenwuyun.modules.common.utils.excel.ExportExcel;
-import cn.wenwuyun.modules.common.utils.excel.ImportExcel;
-import cn.wenwuyun.modules.sys.entity.Role;
-import cn.wenwuyun.modules.sys.entity.User;
-import cn.wenwuyun.modules.sys.service.OptionsService;
-import cn.wenwuyun.modules.sys.service.SystemService;
-import cn.wenwuyun.modules.sys.utils.UserUtils;
+
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.lmn.common.base.ApiData;
+import com.lmn.common.base.BaseController;
+import com.lmn.common.config.Const;
+import com.lmn.common.sys.entity.Role;
+import com.lmn.common.sys.entity.User;
+import com.lmn.common.sys.service.OptionsService;
+import com.lmn.common.sys.service.SystemService;
+import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.utils.BeanValidators;
+import com.lmn.common.utils.DateUtils;
+import com.lmn.common.utils.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -155,7 +154,7 @@ public class UserController extends BaseController {
         try {
             String fileName = "用户数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
             PageInfo<User> page = systemService.findUser(request, user);
-            new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
+//            new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
             return null;
         } catch (Exception e) {
             apiData.setMessage("导出用户失败！失败信息：" + e.getMessage());
@@ -173,41 +172,41 @@ public class UserController extends BaseController {
     @RequestMapping(value = "import", method = RequestMethod.POST)
     public ApiData importFile(MultipartFile file) {
         ApiData apiData = new ApiData();
-        try {
-            int successNum = 0;
-            int failureNum = 0;
-            StringBuilder failureMsg = new StringBuilder();
-            ImportExcel ei = new ImportExcel(file, 1, 0);
-            List<User> list = ei.getDataList(User.class);
-            for (User user : list) {
-                try {
-                    if ("true".equals(checkLoginName("", user.getLoginName()))) {
-                        user.setPassword(SystemService.entryptPassword("123456"));
-                        BeanValidators.validateWithException(validator, user);
-                        systemService.saveUser(user);
-                        successNum++;
-                    } else {
-                        failureMsg.append("<br/>登录名 " + user.getLoginName() + " 已存在; ");
-                        failureNum++;
-                    }
-                } catch (ConstraintViolationException ex) {
-                    failureMsg.append("<br/>登录名 " + user.getLoginName() + " 导入失败：");
-                    List<String> messageList = BeanValidators.extractPropertyAndMessageAsList(ex, ": ");
-                    for (String message : messageList) {
-                        failureMsg.append(message + "; ");
-                        failureNum++;
-                    }
-                } catch (Exception ex) {
-                    failureMsg.append("<br/>登录名 " + user.getLoginName() + " 导入失败：" + ex.getMessage());
-                }
-            }
-            if (failureNum > 0) {
-                failureMsg.insert(0, "，失败 " + failureNum + " 条用户，导入信息如下：");
-            }
-            apiData.setMessage("已成功导入 " + successNum + " 条用户" + failureMsg);
-        } catch (Exception e) {
-            apiData.setMessage("导入用户失败！失败信息：" + e.getMessage());
-        }
+//        try {
+//            int successNum = 0;
+//            int failureNum = 0;
+//            StringBuilder failureMsg = new StringBuilder();
+//            ImportExcel ei = new ImportExcel(file, 1, 0);
+//            List<User> list = ei.getDataList(User.class);
+//            for (User user : list) {
+//                try {
+//                    if ("true".equals(checkLoginName("", user.getLoginName()))) {
+//                        user.setPassword(SystemService.entryptPassword("123456"));
+//                        BeanValidators.validateWithException(validator, user);
+//                        systemService.saveUser(user);
+//                        successNum++;
+//                    } else {
+//                        failureMsg.append("<br/>登录名 " + user.getLoginName() + " 已存在; ");
+//                        failureNum++;
+//                    }
+//                } catch (ConstraintViolationException ex) {
+//                    failureMsg.append("<br/>登录名 " + user.getLoginName() + " 导入失败：");
+//                    List<String> messageList = BeanValidators.extractPropertyAndMessageAsList(ex, ": ");
+//                    for (String message : messageList) {
+//                        failureMsg.append(message + "; ");
+//                        failureNum++;
+//                    }
+//                } catch (Exception ex) {
+//                    failureMsg.append("<br/>登录名 " + user.getLoginName() + " 导入失败：" + ex.getMessage());
+//                }
+//            }
+//            if (failureNum > 0) {
+//                failureMsg.insert(0, "，失败 " + failureNum + " 条用户，导入信息如下：");
+//            }
+//            apiData.setMessage("已成功导入 " + successNum + " 条用户" + failureMsg);
+//        } catch (Exception e) {
+//            apiData.setMessage("导入用户失败！失败信息：" + e.getMessage());
+//        }
         return apiData;
     }
 
@@ -225,7 +224,7 @@ public class UserController extends BaseController {
             String fileName = "用户数据导入模板.xlsx";
             List<User> list = Lists.newArrayList();
             list.add(UserUtils.getUser());
-            new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
+//            new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
             return null;
         } catch (Exception e) {
             apiData.setMessage("导入模板下载失败！失败信息：" + e.getMessage());

@@ -1,7 +1,7 @@
 package com.lmn.common.sys.web;
 
-import cn.wenwuyun.common.persistence.ApiData;
-import cn.wenwuyun.common.web.BaseController;
+import com.lmn.common.base.ApiData;
+import com.lmn.common.base.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

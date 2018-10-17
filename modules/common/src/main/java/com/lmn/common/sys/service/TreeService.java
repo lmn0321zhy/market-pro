@@ -1,10 +1,11 @@
 package com.lmn.common.sys.service;
 
-import cn.wenwuyun.common.service.CrudService;
-import cn.wenwuyun.common.service.ServiceException;
-import cn.wenwuyun.common.utils.Reflections;
-import cn.wenwuyun.modules.sys.dao.TreeDao;
-import cn.wenwuyun.modules.sys.entity.TreeEntity;
+
+import com.lmn.common.base.CrudService;
+import com.lmn.common.exception.ServiceException;
+import com.lmn.common.dao.TreeDao;
+import com.lmn.common.sys.entity.TreeEntity;
+import com.lmn.common.utils.Reflections;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;

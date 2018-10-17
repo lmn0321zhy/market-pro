@@ -1,7 +1,9 @@
 package com.lmn.common.sys.entity;
 
-import cn.wenwuyun.common.persistence.IUser;
-import cn.wenwuyun.common.utils.FileUtils;
+
+import com.lmn.common.base.DataEntity;
+import com.lmn.common.base.IUser;
+import com.lmn.common.utils.FileUtils;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;

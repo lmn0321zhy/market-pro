@@ -11,6 +11,7 @@ import com.lmn.common.base.DataEntity;
 import com.lmn.common.base.IUser;
 import com.lmn.common.config.Const;
 import com.lmn.common.utils.Collections3;
+import com.lmn.common.utils.excel.RoleListType;
 import com.lmn.common.utils.excel.annotation.ExcelField;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;

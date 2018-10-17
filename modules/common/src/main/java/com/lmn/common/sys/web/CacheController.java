@@ -1,9 +1,10 @@
 package com.lmn.common.sys.web;
 
-import cn.wenwuyun.common.persistence.ApiData;
-import cn.wenwuyun.common.utils.CacheUtils;
-import cn.wenwuyun.common.web.BaseController;
-import cn.wenwuyun.modules.sys.utils.UserUtils;
+
+import com.lmn.common.base.ApiData;
+import com.lmn.common.base.BaseController;
+import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.utils.CacheUtils;
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

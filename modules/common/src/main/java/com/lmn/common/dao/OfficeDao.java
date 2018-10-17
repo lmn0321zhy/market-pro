@@ -1,4 +1,4 @@
-package com.lmn.common.sys.dao;
+package com.lmn.common.dao;
 
 
 import com.lmn.common.sys.entity.Office;
