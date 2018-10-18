@@ -6,17 +6,20 @@ import com.lmn.common.config.Const;
 import com.lmn.common.mapper.JsonMapper;
 import com.lmn.common.security.FormAuthenticationFilter;
 import com.lmn.common.security.Principal;
+import com.lmn.common.security.UsernamePasswordToken;
 import com.lmn.common.security.shiro.session.SessionDAO;
 import com.lmn.common.servlet.ValidateCodeServlet;
-import com.lmn.common.sys.entity.Office;
-import com.lmn.common.sys.entity.Options;
-import com.lmn.common.sys.entity.Role;
-import com.lmn.common.sys.entity.User;
-import com.lmn.common.sys.service.OptionsService;
-import com.lmn.common.sys.service.SystemService;
-import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.entity.Office;
+import com.lmn.common.entity.Options;
+import com.lmn.common.entity.Role;
+import com.lmn.common.entity.User;
+import com.lmn.common.service.OptionsService;
+import com.lmn.common.service.SystemService;
+import com.lmn.common.utils.UserUtils;
 import com.lmn.common.utils.IdGen;
 import com.lmn.common.utils.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
@@ -55,14 +58,13 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public ApiData login(HttpServletRequest request, HttpServletResponse response, Model model) {
-        Principal principal = UserUtils.getPrincipal();
-
+//        Principal principal = UserUtils.getPrincipal();
+        Subject subject = SecurityUtils.getSubject();
+        Principal principal = (Principal) subject.getPrincipal();
         ApiData<User> apiData = new ApiData<>();
-
         if (logger.isDebugEnabled()) {
             logger.debug("login, active session size: {}", sessionDAO.getActiveSessions(false).size());
         }
-
         // 如果已经登录，则跳转到管理首页
         if (principal != null) {
             apiData.setAuthenticate("true");

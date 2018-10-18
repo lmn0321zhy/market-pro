@@ -1,7 +1,7 @@
 package com.lmn.common.dao;
 
 
-import com.lmn.common.sys.entity.Office;
+import com.lmn.common.entity.Office;
 
 /**
  * 机构DAO接口

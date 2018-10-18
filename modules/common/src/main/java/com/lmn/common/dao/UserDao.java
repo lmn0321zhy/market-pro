@@ -2,7 +2,7 @@ package com.lmn.common.dao;
 
 
 import com.lmn.common.base.CrudDao;
-import com.lmn.common.sys.entity.User;
+import com.lmn.common.entity.User;
 
 import java.util.List;
 

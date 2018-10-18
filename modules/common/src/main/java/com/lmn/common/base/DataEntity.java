@@ -4,12 +4,11 @@ package com.lmn.common.base;
  * Created by lmn on 2018-10-10.
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import com.lmn.common.sys.entity.MetaContent;
-import com.lmn.common.sys.entity.User;
-import com.lmn.common.sys.utils.MetaUtils;
-import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.entity.MetaContent;
+import com.lmn.common.entity.User;
+import com.lmn.common.utils.MetaUtils;
+import com.lmn.common.utils.UserUtils;
 import com.lmn.common.utils.IdGen;
 import com.lmn.common.utils.StringUtils;
 import org.hibernate.validator.constraints.Length;

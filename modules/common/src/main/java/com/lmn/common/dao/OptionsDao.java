@@ -2,7 +2,7 @@ package com.lmn.common.dao;
 
 
 import com.lmn.common.base.CrudDao;
-import com.lmn.common.sys.entity.Options;
+import com.lmn.common.entity.Options;
 
 import java.util.HashMap;
 import java.util.List;

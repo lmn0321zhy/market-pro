@@ -4,11 +4,11 @@ package com.lmn.common.security;
 import com.lmn.common.config.Const;
 import com.lmn.common.servlet.Servlets;
 import com.lmn.common.servlet.ValidateCodeServlet;
-import com.lmn.common.sys.entity.Menu;
-import com.lmn.common.sys.entity.Role;
-import com.lmn.common.sys.entity.User;
-import com.lmn.common.sys.service.SystemService;
-import com.lmn.common.sys.utils.UserUtils;
+import com.lmn.common.entity.Menu;
+import com.lmn.common.entity.Role;
+import com.lmn.common.entity.User;
+import com.lmn.common.service.SystemService;
+import com.lmn.common.utils.UserUtils;
 import com.lmn.common.utils.Encodes;
 import com.lmn.common.utils.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +26,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -37,7 +38,7 @@ import java.util.List;
 public class SystemAuthorizingRealm extends AuthorizingRealm {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-
+    @Autowired
     private SystemService systemService;
 
 

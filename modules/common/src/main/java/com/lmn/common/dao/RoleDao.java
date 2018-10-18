@@ -2,7 +2,7 @@ package com.lmn.common.dao;
 
 
 import com.lmn.common.base.CrudDao;
-import com.lmn.common.sys.entity.Role;
+import com.lmn.common.entity.Role;
 
 /**
  * 角色DAO接口

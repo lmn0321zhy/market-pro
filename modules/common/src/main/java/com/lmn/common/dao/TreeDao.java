@@ -1,7 +1,7 @@
 package com.lmn.common.dao;
 
 import com.lmn.common.base.CrudDao;
-import com.lmn.common.sys.entity.TreeEntity;
+import com.lmn.common.entity.TreeEntity;
 
 import java.util.List;
 

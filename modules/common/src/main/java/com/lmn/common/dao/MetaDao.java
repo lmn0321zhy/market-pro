@@ -2,8 +2,8 @@ package com.lmn.common.dao;
 
 
 import com.lmn.common.base.CrudDao;
-import com.lmn.common.sys.entity.Meta;
-import com.lmn.common.sys.entity.MetaContent;
+import com.lmn.common.entity.Meta;
+import com.lmn.common.entity.MetaContent;
 
 import java.util.List;
 import java.util.Map;

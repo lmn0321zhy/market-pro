@@ -2,8 +2,8 @@ package com.lmn.common.utils.excel;
 
 
 import com.google.common.collect.Lists;
-import com.lmn.common.sys.entity.Role;
-import com.lmn.common.sys.service.SystemService;
+import com.lmn.common.entity.Role;
+import com.lmn.common.service.SystemService;
 import com.lmn.common.utils.Collections3;
 import com.lmn.common.utils.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
