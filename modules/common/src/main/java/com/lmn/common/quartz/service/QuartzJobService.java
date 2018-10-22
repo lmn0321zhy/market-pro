@@ -1,15 +1,17 @@
 package com.lmn.common.quartz.service;
 
-import com.lmn.common.base.CrudService;
+import com.lmn.common.utils.QuartzJobUtils;
+import com.lmn.common.base.BaseService;
 import com.lmn.common.quartz.AsyncJob;
 import com.lmn.common.quartz.UnAsyncJob;
 import com.lmn.common.quartz.dao.QuartzJobDao;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
-import com.lmn.common.utils.QuartzJobUtils;
 import lombok.Data;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.impl.triggers.CronTriggerImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,12 @@ import java.util.Set;
  */
 @Data
 @Service
-public class QuartzJobService extends CrudService<QuartzJobDao, QuartzJobDTO> {
+public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
+
+    /**
+     * 日志对象
+     */
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private Scheduler scheduler;
@@ -69,7 +76,7 @@ public class QuartzJobService extends CrudService<QuartzJobDao, QuartzJobDTO> {
      * @return
      * @throws SchedulerException
      */
-    public QuartzJobDTO getJob(String jobName,String jobGroup) throws SchedulerException {
+    public QuartzJobDTO getJob(String jobName, String jobGroup) throws SchedulerException {
         QuartzJobDTO job = null;
         TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);

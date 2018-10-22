@@ -35,5 +35,15 @@
         #{createTime}
         )
     </insert>
+    <update id="update" parameterType="com.lmn.common.quartz.dto.QuartzResultDTO">
+        UPDATE t_lmn_quartz_result SET
+        job_name=#{jobName},
+        JOB_GROUP=#{jobGroup},
+        success=#{success},
+        error_msg=#{errorMsg},
+        duration= #{duration},
+        create_time=#{createTime}
+        where id=#{id}
+    </update>
 
 </mapper>

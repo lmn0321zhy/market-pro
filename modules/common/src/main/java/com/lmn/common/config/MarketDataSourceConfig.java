@@ -40,5 +40,6 @@ public class MarketDataSourceConfig {
     private Boolean testOnBorrow;
 
     private Boolean testOnReturn;
+    private String name;// 数据库名称
 
 }

@@ -1,6 +1,7 @@
 package com.lmn.common.quartz.dto;
 
-import com.lmn.common.base.DataEntity;
+
+import com.lmn.common.base.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ import java.util.Date;
  * Created by lmn on 2018-10-09.
  */
 @Data
-public class QuartzJobDTO extends DataEntity<QuartzJobDTO> {
+public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
     private static final long serialVersionUID = 607415834012939242L;
 
     public static final String STATUS_RUNNING = "1";

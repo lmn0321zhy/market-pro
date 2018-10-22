@@ -6,6 +6,7 @@ import com.lmn.common.utils.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -14,7 +15,7 @@ import javax.sql.DataSource;
  * Created by lmn on 2018-10-11.
  */
 @Component
-@AutoConfigureAfter(SpringContextHolder.class)
+@Configuration
 public class MarketDataSource {
     @Autowired
     private MarketDataSourceConfig marketDataSourceConfig;

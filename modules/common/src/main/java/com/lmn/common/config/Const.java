@@ -1,9 +1,9 @@
 package com.lmn.common.config;
 
-import com.lmn.common.utils.SpringContextHolder;
-import com.lmn.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.pagehelper.Dialect;
+import com.lmn.common.utils.SpringContextHolder;
+import com.lmn.common.utils.StringUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 

@@ -1,6 +1,6 @@
 package com.lmn.common.quartz.dto;
 
-import com.lmn.common.base.DataEntity;
+import com.lmn.common.base.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
  * quartz运行结果
  */
 @Data
-public class QuartzResultDTO  extends DataEntity<QuartzResultDTO> {
+public class QuartzResultDTO  extends BaseEntity<QuartzResultDTO> {
 	private String jobName;
 	private String jobGroup;
 	private String success;

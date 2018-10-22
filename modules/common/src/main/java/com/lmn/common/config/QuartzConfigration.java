@@ -1,6 +1,7 @@
 package com.lmn.common.config;
 
 import com.lmn.common.quartz.JobFactory;
+import com.lmn.common.utils.SpringContextHolder;
 import lombok.Data;
 import org.quartz.Scheduler;
 import org.quartz.ee.servlet.QuartzInitializerListener;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -23,7 +25,7 @@ import java.util.Properties;
  * Created by lmn on 2018-10-08.
  */
 @Data
-@Configuration
+@AutoConfigureAfter(MarketDataSource.class)
 public class QuartzConfigration {
     @SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
