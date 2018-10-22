@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Service基类
  */
-public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>> {
+public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity> {
 
     /**
      * 持久层对象
@@ -27,8 +27,8 @@ public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>>
      * @param id
      * @return
      */
-    public T get(String id) {
-        return dao.get(id);
+    public T getById(String id) {
+        return dao.getById(id);
     }
 
     /**
@@ -37,8 +37,8 @@ public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>>
      * @param entity
      * @return
      */
-    public T get(T entity) {
-        return dao.get(entity);
+    public T getByEntity(T entity) {
+        return dao.getByEntity(entity);
     }
 
     /**
@@ -143,8 +143,8 @@ public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>>
      *
      * @param entity
      */
-    public void delete(T entity) {
-        dao.delete(entity);
+    public void deleteByEntity(T entity) {
+        dao.deleteByEntity(entity);
     }
 
 }

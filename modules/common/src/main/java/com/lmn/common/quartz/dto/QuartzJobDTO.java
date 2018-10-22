@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by lmn on 2018-10-09.
  */
 @Data
-public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
+public class QuartzJobDTO extends BaseEntity{
     private static final long serialVersionUID = 607415834012939242L;
 
     public static final String STATUS_RUNNING = "1";

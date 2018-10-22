@@ -15,7 +15,7 @@ import java.util.UUID;
  * 数据Entity类
  */
 @Data
-public abstract class BaseEntity<T> {
+public abstract class BaseEntity {
     private static final long serialVersionUID = 1L;
     protected String id;
     protected String remarks;    // 备注

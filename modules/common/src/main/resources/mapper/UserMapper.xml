@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lmn.common.web.user.mapper.UserMapper">
+<mapper namespace="com.lmn.common.dao.UserDao">
+    <sql id="result">
+        role as role,
+        name as name
 
-   <select id="queryList" resultType="java.util.Map">
-       SELECT * from sys_user
+    </sql>
+   <select id="getByEntity" resultType="com.lmn.common.entity.User" parameterType="com.lmn.common.entity.User">
+       SELECT * from sys_user where name=#{name}
    </select>
 
 </mapper>

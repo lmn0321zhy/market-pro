@@ -9,7 +9,7 @@ import java.util.Date;
  * quartz运行结果
  */
 @Data
-public class QuartzResultDTO  extends BaseEntity<QuartzResultDTO> {
+public class QuartzResultDTO  extends BaseEntity{
 	private String jobName;
 	private String jobGroup;
 	private String success;
