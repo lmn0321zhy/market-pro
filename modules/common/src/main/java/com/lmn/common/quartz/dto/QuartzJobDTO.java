@@ -16,8 +16,8 @@ public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
     public static final String STATUS_RUNNING = "1";
     public static final String STATUS_NOT_RUNNING = "0";
     public static final String STATUS_DELETED = "2";
-    public static final String CONCURRENT_IS = "1";
-    public static final String CONCURRENT_NOT = "0";
+    public static final String ASYNC = "1"; // job并发运行
+    public static final String UNASYNC = "0"; // // job不并发运行
 
     /**
      * 任务id
@@ -42,7 +42,7 @@ public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
     /**
      * 任务是否有状态（并发与否）
      */
-    private String isConcurrent = "1";
+    private String async = "1";
 
     /**
      * 任务运行时间表达式
@@ -54,20 +54,11 @@ public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
      */
     private String description;
 
-    /**
-     * 任务调用类在spring中注册的bean id，如果spingId不为空，则按springId查找
-     */
-//    private String springId;
 
     /**
      * 任务调用类名，包名+类名，通过类反射调用 ，如果spingId为空，则按jobClass查找
      */
     private String jobClass;
-
-    /**
-     * 任务调用的方法名
-     */
-//    private String methodName;
 
     /**
      * 启动时间

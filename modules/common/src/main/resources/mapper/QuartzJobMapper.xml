@@ -6,7 +6,7 @@
       job_name as jobName,
       JOB_GROUP as jobGroup,
       JOB_STATUS as jobStatus,
-      IS_CONCURRENT as isConcurrent,
+      ASYNC as async,
       Job_Class as jobClass,
       CRON_EXPRESSION as cronExpression,
       startTime as startTime,

@@ -1,15 +1,8 @@
 package com.lmn.common.quartz;
 
 
-import com.lmn.common.quartz.dto.QuartzJobDTO;
-import com.lmn.common.quartz.dto.QuartzResultDTO;
-import com.lmn.common.quartz.service.QuartzJobService;
-import com.lmn.common.quartz.service.QuartzResultService;
-import com.lmn.common.utils.QuartzJobUtils;
 import org.quartz.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 
 /**
@@ -18,28 +11,5 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 主要是通过注解：@DisallowConcurrentExecution
  */
 @DisallowConcurrentExecution
-public class UnAsyncJob implements Job {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private QuartzJobService quartzJobService;
-    @Autowired
-    private QuartzResultService quartzResultService;
-
-    @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
-        JobDetail job = context.getJobDetail();
-        JobKey key = job.getKey();
-        String jobIdentity = "scheduleJob" + key.getGroup() + "_" + key.getName();
-        Trigger trigger = context.getTrigger();
-        QuartzJobDTO scheduleJob = (QuartzJobDTO) context.getMergedJobDataMap().get(jobIdentity);
-        logger.info("运行任务名称 = [" + scheduleJob + "]");
-        QuartzResultDTO result = QuartzJobUtils.invokMethod(scheduleJob);
-        scheduleJob.setNextTime(trigger.getNextFireTime());
-        scheduleJob.setPreviousTime(trigger.getPreviousFireTime());
-        quartzJobService.updateByIdAndTime(scheduleJob);
-        // 写入运行结果
-        quartzResultService.save(result);
-    }
-
+public class UnAsyncJob extends AsyncJob {
 }

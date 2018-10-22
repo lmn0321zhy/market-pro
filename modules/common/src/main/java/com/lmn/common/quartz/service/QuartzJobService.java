@@ -195,7 +195,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
     }
 
     private JobDetail getJobDetail(QuartzJobDTO job) {
-        Class<? extends Job> clazz = QuartzJobDTO.CONCURRENT_IS.equals(job.getIsConcurrent())
+        Class<? extends Job> clazz = QuartzJobDTO.ASYNC.equals(job.getAsync())
                 ? AsyncJob.class : UnAsyncJob.class;
         JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(job.getJobName(), job.getJobGroup()).build();
         return jobDetail;

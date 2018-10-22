@@ -13,6 +13,12 @@ public class Demo implements BaseJob{
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public void execute() throws JobExecutionException {
-        logger.info("quzrtz----TEST");
+        logger.info(Thread.currentThread().getName()+"quzrtz----START");
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(Thread.currentThread().getName()+"quzrtz----END");
     }
 }

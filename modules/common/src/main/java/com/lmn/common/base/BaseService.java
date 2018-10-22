@@ -2,6 +2,7 @@ package com.lmn.common.base;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lmn.common.exception.DBException;
 import com.lmn.common.utils.Collections3;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +86,21 @@ public abstract class BaseService<D extends BaseDao<T>, T extends BaseEntity<T>>
      *
      * @param entity
      */
-    public void save(T entity) {
+    public void save(T entity) throws DBException{
         if (StringUtils.isBlank(entity.getId())) {
             entity.preInsert();
-            dao.insert(entity);
+            try {
+                dao.insert(entity);
+            }catch (Exception e){
+                throw new DBException(e.getMessage(),e);
+            }
         } else {
             entity.preUpdate();
-            dao.update(entity);
+            try {
+                dao.update(entity);
+            }catch (Exception e){
+                throw new DBException(e.getMessage(),e);
+            }
         }
     }
 

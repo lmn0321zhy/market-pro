@@ -33,10 +33,13 @@ public class AsyncJob implements Job {
         QuartzResultDTO result = QuartzJobUtils.invokMethod(scheduleJob);
         scheduleJob.setNextTime(trigger.getNextFireTime());
         scheduleJob.setPreviousTime(trigger.getPreviousFireTime());
-        quartzJobService.update(scheduleJob);
-        // 写入运行结果
-        quartzResultService.save(result);
-        logger.info("运行结束任务名称 = [" + scheduleJob + "]");
+        try {
+            quartzJobService.update(scheduleJob);
+            // 写入运行结果
+            quartzResultService.save(result);
+            logger.info("运行结束任务名称 = [" + scheduleJob + "]");
+        }catch (Exception e){
+            logger.info("运行任务名称 = [" + scheduleJob + "]出现异常："+e.getMessage());
+        }
     }
-
 }
