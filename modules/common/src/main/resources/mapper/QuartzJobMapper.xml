@@ -7,7 +7,7 @@
       JOB_GROUP as jobGroup,
       JOB_STATUS as jobStatus,
       ASYNC as async,
-      Job_Class as jobClass,
+      Job_Bean as jobBean,
       CRON_EXPRESSION as cronExpression,
       startTime as startTime,
       previousTime as previousTime,
@@ -17,13 +17,35 @@
        SELECT
         <include refid="result"></include>
         from t_lmn_Quartz_Job
+       where JOB_STATUS=#{jobStatus}
    </select>
     <update id="update" parameterType="com.lmn.common.quartz.dto.QuartzJobDTO">
         update t_lmn_Quartz_Job SET
-            previousTime = #{previousTime},
-            nextTime = #{nextTime},
-            startTime = #{startTime}
-            WHERE id = #{id}
+          <if test="previousTime != null">
+              previousTime = #{previousTime},
+          </if>
+          <if test="nextTime != null">
+              nextTime = #{nextTime},
+          </if>
+          <if test="startTime != null">
+              startTime = #{startTime},
+          </if>
+        <if test="async != null and async != ''">
+            ASYNC = #{async},
+        </if>
+        <if test="cronExpression != null and cronExpression!='' ">
+            CRON_EXPRESSION = #{cronExpression},
+        </if>
+        <if test="startTime != null">
+            startTime = #{startTime},
+        </if>
+        <if test="startTime != null">
+            startTime = #{startTime},
+        </if>
+        <if test="jobBean != null and jobBean != ''">
+            Job_Bean = #{jobBean}
+        </if>
+          WHERE id = #{id}
     </update>
 
 </mapper>

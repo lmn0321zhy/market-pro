@@ -2,6 +2,7 @@ package com.lmn.common.utils;
 
 
 import com.lmn.common.base.BaseJob;
+import com.lmn.common.quartz.demo.Demo;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
 import com.lmn.common.quartz.dto.QuartzResultDTO;
 import org.apache.logging.log4j.LogManager;
@@ -18,21 +19,10 @@ public class QuartzJobUtils {
     private static Logger logger = LogManager.getLogger(QuartzJobUtils.class);
 
     public static QuartzResultDTO invokMethod(QuartzJobDTO scheduleJob) {
-        Object object = null;
-        Class<?> clazz = null;
+        Object object = SpringContextHolder.getBean(scheduleJob.getJobBean());
         QuartzResultDTO result = new QuartzResultDTO();
-        ;
         long start = System.currentTimeMillis();
         try {
-            String beanClass = scheduleJob.getJobClass();
-            if (beanClass != null && !"".equals(beanClass.trim())) {
-                try {
-                    clazz = Class.forName(scheduleJob.getJobClass());
-                    object = clazz.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             if (object == null) {
                 throw new Exception("任务名称 = [" + scheduleJob.getJobName() + "]---------------未启动成功，请检查是否配置正确！！！");
             }

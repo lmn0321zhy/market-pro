@@ -1,5 +1,6 @@
 package com.lmn.common.quartz.service;
 
+import com.lmn.common.exception.BusinessException;
 import com.lmn.common.utils.QuartzJobUtils;
 import com.lmn.common.base.BaseService;
 import com.lmn.common.quartz.AsyncJob;
@@ -41,6 +42,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 创建job
+     *
      * @param jobName
      * @param jobGroup
      * @param scheduler
@@ -50,7 +52,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
      */
     private QuartzJobDTO createJob(String jobName, String jobGroup, Scheduler scheduler, Trigger trigger)
             throws SchedulerException {
-        QuartzJobDTO job=new QuartzJobDTO();
+        QuartzJobDTO job = new QuartzJobDTO();
         job.setJobName(jobName);
         job.setJobGroup(jobGroup);
         job.setDescription("触发器:" + trigger.getKey());
@@ -60,8 +62,8 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
         Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
         job.setJobStatus(triggerState.name());
 
-        if(trigger instanceof CronTrigger) {
-            CronTrigger cronTrigger = (CronTrigger)trigger;
+        if (trigger instanceof CronTrigger) {
+            CronTrigger cronTrigger = (CronTrigger) trigger;
             String cronExpression = cronTrigger.getCronExpression();
             job.setCronExpression(cronExpression);
         }
@@ -71,6 +73,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 获取单个任务
+     *
      * @param jobName
      * @param jobGroup
      * @return
@@ -86,12 +89,14 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
         return job;
     }
+
     /**
      * 获取所有任务
+     *
      * @return
      * @throws SchedulerException
      */
-    public List<QuartzJobDTO> getAllJobs() throws SchedulerException{
+    public List<QuartzJobDTO> getAllJobs() throws SchedulerException {
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
         List<QuartzJobDTO> jobList = new ArrayList<QuartzJobDTO>();
@@ -114,7 +119,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
      * @return
      * @throws SchedulerException
      */
-    
+
     public List<QuartzJobDTO> getRunningJob() throws SchedulerException {
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
         List<QuartzJobDTO> jobList = new ArrayList<QuartzJobDTO>(executingJobs.size());
@@ -139,19 +144,19 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
      * @param job
      * @throws SchedulerException
      */
-    
+
     public boolean addJob(QuartzJobDTO job) throws SchedulerException {
-        if(job == null || !QuartzJobDTO.STATUS_RUNNING.equals(job.getJobStatus())) {
+        if (job == null || !QuartzJobDTO.STATUS_RUNNING.equals(job.getJobStatus())) {
             return false;
         }
         String jobName = job.getJobName();
         String jobGroup = job.getJobGroup();
-        if(!QuartzJobUtils.isValidExpression(job.getCronExpression())) {
-            logger.error("时间表达式错误（"+jobName+","+jobGroup+"）, "+job.getCronExpression());
+        if (!QuartzJobUtils.isValidExpression(job.getCronExpression())) {
+            logger.error("时间表达式错误（" + jobName + "," + jobGroup + "）, " + job.getCronExpression());
             return false;
         } else {
             // 任务名称和任务组设置规则：    // 名称：task_1 ..    // 组 ：group_1 ..
-            TriggerKey triggerKey = TriggerKey.triggerKey(jobName,	jobGroup);
+            TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
             Trigger trigger = scheduler.getTrigger(triggerKey);
             // 不存在，创建一个
             if (null == trigger) {
@@ -159,7 +164,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
                 // 按新的表达式构建一个新的trigger
                 trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
-                        .startAt(job.getStartTime()==null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
+                        .startAt(job.getStartTime() == null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
                         .withSchedule(scheduleBuilder).build();
 
                 //是否允许并发执行
@@ -176,22 +181,22 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
                 job.setStartTime(trigger.getStartTime());
                 job.setNextTime(trigger.getNextFireTime());
                 job.setPreviousTime(trigger.getPreviousFireTime());
-                 quartzJobDao.update(job);
+                quartzJobDao.update(job);
                 getJobDetail(job).getJobDataMap().put(getJobIdentity(job), job);
-
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
                 // 按新的表达式构建一个新的trigger
                 trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
-                        .startAt(job.getStartTime()==null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
+                        .startAt(job.getStartTime() == null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
                         .withSchedule(scheduleBuilder).build();
                 scheduler.rescheduleJob(triggerKey, trigger);
             }
+
         }
         return true;
     }
 
     private String getJobIdentity(QuartzJobDTO job) {
-        return "scheduleJob"+(job.getJobGroup() +"_"+job.getJobName());
+        return "scheduleJob" + (job.getJobGroup() + "_" + job.getJobName());
     }
 
     private JobDetail getJobDetail(QuartzJobDTO job) {
@@ -203,23 +208,22 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 暂停任务
+     *
      * @param job
      * @return
      */
-    
+
     @Transactional
-    public boolean pauseJob(QuartzJobDTO job){
+    public boolean pauseJob(QuartzJobDTO job) {
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         boolean result;
         try {
             scheduler.pauseJob(jobKey);
-
             // 更新任务状态到数据库
             job.setJobStatus(QuartzJobDTO.STATUS_NOT_RUNNING);
             quartzJobDao.update(job);
-
             result = true;
-        } catch (SchedulerException e) {
+        } catch (Exception e) {
             result = false;
             e.printStackTrace();
         }
@@ -228,12 +232,13 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 恢复任务
+     *
      * @param job
      * @return
      */
-    
+
     @Transactional
-    public boolean resumeJob(QuartzJobDTO job){
+    public boolean resumeJob(QuartzJobDTO job) {
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         boolean result;
         try {
@@ -242,7 +247,7 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
             // 表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(triggerKey)
-                    .startAt(job.getStartTime()==null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
+                    .startAt(job.getStartTime() == null ? (new Date()) : job.getStartTime()) // 设置job不早于这个时间进行运行,和调用trigger的setStartTime方法效果一致
                     .withSchedule(scheduleBuilder).build();
             scheduler.rescheduleJob(triggerKey, trigger);
             scheduler.resumeJob(jobKey);
@@ -262,12 +267,12 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
     /**
      * 删除任务
      */
-    
+
     @Transactional
-    public boolean deleteJob(QuartzJobDTO job){
+    public boolean deleteJob(QuartzJobDTO job) {
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         boolean result;
-        try{
+        try {
             scheduler.deleteJob(jobKey);
 
             // 更新任务状态到数据库
@@ -284,21 +289,23 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 立即执行一个任务
+     *
      * @param scheduleJob
      * @throws SchedulerException
      */
-    
-    public void startJob(QuartzJobDTO scheduleJob) throws SchedulerException{
+
+    public void startJob(QuartzJobDTO scheduleJob) throws SchedulerException {
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
         scheduler.triggerJob(jobKey);
     }
 
     /**
      * 更新任务时间表达式
+     *
      * @param job
      * @throws SchedulerException
      */
-    
+
     @Transactional
     public void updateCronExpression(QuartzJobDTO job) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
@@ -321,10 +328,11 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
 
     /**
      * 设置job的开始schedule时间
+     *
      * @param job
      * @throws SchedulerException
      */
-    
+
     @Transactional
     public void updateStartTime(QuartzJobDTO job) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
@@ -342,17 +350,11 @@ public class QuartzJobService extends BaseService<QuartzJobDao, QuartzJobDTO> {
         getJobDetail(job).getJobDataMap().put(getJobIdentity(job), job);
     }
 
-    
+
     public List<QuartzJobDTO> findByJobStatus(String statusRunning) {
-        QuartzJobDTO quartzJobDTO=new QuartzJobDTO();
+        QuartzJobDTO quartzJobDTO = new QuartzJobDTO();
         quartzJobDTO.setJobStatus(statusRunning);
         return quartzJobDao.findList(quartzJobDTO);
     }
-
-    
-    public void updateByIdAndTime(QuartzJobDTO QuartzJobDTO) {
-
-    }
-
 
 }

@@ -56,9 +56,9 @@ public class QuartzJobDTO extends BaseEntity<QuartzJobDTO> {
 
 
     /**
-     * 任务调用类名，包名+类名，通过类反射调用 ，如果spingId为空，则按jobClass查找
+     * 任务调用实例名
      */
-    private String jobClass;
+    private String jobBean;
 
     /**
      * 启动时间
