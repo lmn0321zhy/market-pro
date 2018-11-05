@@ -7,7 +7,28 @@
 
     </sql>
    <select id="getByEntity" resultType="com.lmn.common.entity.User" parameterType="com.lmn.common.entity.User">
-       SELECT * from sys_user where name=#{name}
+       SELECT * from t_lmn_sys_user where name=#{name}
    </select>
+    <insert id="insert" parameterType="com.lmn.common.entity.User">
+        INSERT INTO t_lmn_sys_user(
+        id,
+        name,
+        password,
+        login_name,
+        create_by,
+        create_date,
+        update_by,
+        update_date
+        ) VALUES (
+        #{id},
+        #{name},
+        #{password},
+        #{loginName},
+        #{createBy},
+        #{createDate},
+        #{updateBy},
+        #{updateDate}
+        )
+    </insert>
 
 </mapper>

@@ -49,6 +49,13 @@ public class ApiData<T> {
      */
     private T data;
 
+    public ApiData(T data) {
+        this.data = data;
+    }
+
+    public ApiData() {
+    }
+
     public static String success = "success";
     public static String info = "info";
     public static String warning = "warning";

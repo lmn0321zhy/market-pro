@@ -3,33 +3,62 @@ package com.lmn.common.web;
 import com.lmn.common.base.ApiData;
 import com.lmn.common.base.BaseController;
 import com.lmn.common.entity.User;
+import com.lmn.common.service.UserService;
+import com.lmn.common.utils.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lmn on 2018-10-22.
  */
 @Controller
 public class LoginController extends BaseController{
-    @RequestMapping("/login")
-    public ApiData login(User user){
-        ApiData jsonObject = new ApiData();
+    @Autowired
+    private UserService userService;
+
+
+    /**
+     * 登录失败，真正登录的POST请求由Filter完成
+     */
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public ApiData loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getName(), user.getPassword());
-        try {
-            subject.login(token);
-            jsonObject.setData(subject.getSession().getId());
-            jsonObject.setMessage("登录成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
+        Object principal = subject.getPrincipal();
+        Map data = new HashMap<>();
+        ApiData apiData = new ApiData<>(data);
+
+        String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
+        String exception = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+//        String message = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM);
+
+//        if (StringUtils.isBlank(message) || StringUtils.equals(message, "null")) {
+//            message = "用户或密码错误, 请重试.";
+//        }
+//        apiData.setMessage(message);
+        apiData.setAuthenticate("false");
+        return apiData;
     }
+
+
+
+    @RequestMapping("/registry")
+    public ApiData registry(User user){
+        ApiData apiData = userService.registry(user);
+        return apiData;
+    }
+
 
 }
