@@ -5,6 +5,9 @@ import com.lmn.common.base.BaseController;
 import com.lmn.common.entity.User;
 import com.lmn.common.service.UserService;
 import com.lmn.common.utils.StringUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +28,8 @@ import java.util.Map;
 /**
  * Created by lmn on 2018-10-22.
  */
-@Controller
+@RestController
+@Api("swaggerTestController相关api")
 public class LoginController extends BaseController{
     @Autowired
     private UserService userService;
@@ -34,6 +39,7 @@ public class LoginController extends BaseController{
      * 登录失败，真正登录的POST请求由Filter完成
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
+    @ApiOperation(value = "登录接口")
     public ApiData loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
         Subject subject = SecurityUtils.getSubject();
         Object principal = subject.getPrincipal();
