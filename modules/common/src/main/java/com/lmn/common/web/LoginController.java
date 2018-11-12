@@ -5,9 +5,7 @@ import com.lmn.common.base.BaseController;
 import com.lmn.common.entity.User;
 import com.lmn.common.service.UserService;
 import com.lmn.common.utils.StringUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -16,6 +14,7 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,38 +28,32 @@ import java.util.Map;
  * Created by lmn on 2018-10-22.
  */
 @RestController
-@Api("swaggerTestController相关api")
+@Api("登录相关的接口")
 public class LoginController extends BaseController{
     @Autowired
     private UserService userService;
 
-
-    /**
-     * 登录失败，真正登录的POST请求由Filter完成
-     */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ApiOperation(value = "登录接口")
-    public ApiData loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public ApiData login(@ApiParam(name="用户对象",value="传入json格式",required=true)User user) {
         Subject subject = SecurityUtils.getSubject();
-        Object principal = subject.getPrincipal();
-        Map data = new HashMap<>();
-        ApiData apiData = new ApiData<>(data);
-
-        String username = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
-        String exception = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-//        String message = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_MESSAGE_PARAM);
-
-//        if (StringUtils.isBlank(message) || StringUtils.equals(message, "null")) {
-//            message = "用户或密码错误, 请重试.";
-//        }
-//        apiData.setMessage(message);
-        apiData.setAuthenticate("false");
+        ApiData apiData = new ApiData<>();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getLoginName(), user.getPassword());
+        try {
+            subject.login(token);
+            user = (User) subject.getPrincipal();
+            apiData.setMessage("登录成功!");
+            apiData.setData(user);
+        }catch (Exception e){
+            apiData.setMessage("登录失败!");
+            apiData.setData(null);
+        }
         return apiData;
     }
 
 
 
-    @RequestMapping("/registry")
+    @PostMapping("/registry")
     public ApiData registry(User user){
         ApiData apiData = userService.registry(user);
         return apiData;

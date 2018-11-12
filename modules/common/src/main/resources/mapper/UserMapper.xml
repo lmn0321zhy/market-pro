@@ -2,12 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lmn.common.dao.UserDao">
     <sql id="result">
+        login_name as loginName,
         role as role,
         name as name
 
     </sql>
    <select id="getByEntity" resultType="com.lmn.common.entity.User" parameterType="com.lmn.common.entity.User">
-       SELECT * from t_lmn_sys_user where name=#{name}
+       SELECT * from t_lmn_sys_user where login_name=#{loginName}
    </select>
     <insert id="insert" parameterType="com.lmn.common.entity.User">
         INSERT INTO t_lmn_sys_user(

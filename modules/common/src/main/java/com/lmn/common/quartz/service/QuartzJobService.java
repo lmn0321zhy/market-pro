@@ -1,10 +1,9 @@
 package com.lmn.common.quartz.service;
 
-import com.lmn.common.exception.BusinessException;
 import com.lmn.common.utils.QuartzJobUtils;
 import com.lmn.common.base.BaseService;
-import com.lmn.common.quartz.AsyncJob;
-import com.lmn.common.quartz.UnAsyncJob;
+import com.lmn.common.quartz.base.AsyncJob;
+import com.lmn.common.quartz.base.UnAsyncJob;
 import com.lmn.common.quartz.dao.QuartzJobDao;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
 import lombok.Data;

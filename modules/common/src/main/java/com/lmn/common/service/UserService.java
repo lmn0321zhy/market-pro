@@ -24,7 +24,7 @@ public class UserService extends BaseService<UserDao, User> {
 
     public User findByName(String name) {
         User user = new User();
-        user.setName(name);
+        user.setLoginName(name);
         return userDao.getByEntity(user);
     }
 
@@ -37,7 +37,7 @@ public class UserService extends BaseService<UserDao, User> {
             apiData.setRedirect("/");
             return apiData;
         }
-        if (!checkLoginName(user.getLoginName())) {
+        if (checkLoginName(user.getLoginName())) {
             apiData.setMessage("登录名已存在,请使用新的用户名");
         } else {
             user.setPassword(ShiroUtils.entryptPassword(user.getPassword()));

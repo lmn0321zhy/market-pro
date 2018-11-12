@@ -1,6 +1,7 @@
-package com.lmn.common.quartz;
+package com.lmn.common.quartz.base;
 
 
+import com.lmn.common.quartz.base.AsyncJob;
 import org.quartz.*;
 
 

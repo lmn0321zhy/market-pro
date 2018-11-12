@@ -1,4 +1,4 @@
-package com.lmn.common.quartz;
+package com.lmn.common.quartz.base;
 
 import com.lmn.common.utils.QuartzJobUtils;
 import com.lmn.common.quartz.dto.QuartzJobDTO;
